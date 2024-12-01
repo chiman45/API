@@ -1,0 +1,27 @@
+const express = require('express');
+const bodyParser = require('body-parser');
+
+const app = express();
+const port = process.env.PORT || 3000;
+
+// Middleware to parse JSON request bodies
+app.use(bodyParser.json());
+
+// In-memory data store
+let data = {};
+
+// POST endpoint to receive data
+app.post('/post_data', (req, res) => {
+    data = { ...data, ...req.body };
+    res.json({ message: 'Data received successfully' });
+});
+
+// GET endpoint to retrieve data
+app.get('/get_data', (req, res) => {
+    res.json(data);
+    console.log("Data retrieved successfully");
+});
+
+app.listen(port, () => {
+    console.log(`Server listening on port ${port}`);
+});
